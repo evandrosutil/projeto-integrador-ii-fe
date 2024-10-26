@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
-import { Search, Filter, PawPrint, Weight, Calendar, Info, Check, X, Heart } from 'lucide-react';
+import { Search, PawPrint, Weight, Calendar, Info, Check, X, Heart } from 'lucide-react';
 
 function AnimalList() {
   const [animals, setAnimals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('todos');
+  const [idadeFilter, setIdadeFilter] = useState('todos');
+  const [vacinacaoFilter, setVacinacaoFilter] = useState('todos');
+  const [generoFilter, setGeneroFilter] = useState('todos');
+  const [castradoFilter, setCastradoFilter] = useState('todos')
 
   useEffect(() => {
     fetchAnimals();
@@ -18,9 +22,9 @@ function AnimalList() {
       console.log("Fazendo requisição para a API...");
       const response = await api.get('/animals/');
       console.log("Resposta da API:", response.data);
-      
+
       const animalData = response.data.results || response.data;
-      
+
       if (Array.isArray(animalData)) {
         setAnimals(animalData);
       } else {
@@ -46,16 +50,38 @@ function AnimalList() {
   };
 
   const getGenderLabel = (gender) => {
+    console.log("gênero é ", gender);
     return gender === 'M' ? 'Macho' : gender === 'F' ? 'Fêmea' : gender;
   };
 
-  const filteredAnimals = animals
-    .filter(animal => 
-      animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      animal.species.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (animal.breed && animal.breed.toLowerCase().includes(searchTerm.toLowerCase()))
-    )
-    .filter(animal => statusFilter === 'all' || animal.status === statusFilter);
+  const getIdadeGroup = (age_estimated) => {
+    console.log("idade é ", age_estimated);
+    if (age_estimated <= 1) return 'filhote';
+    if (age_estimated <= 7) return 'adulto';
+    return 'idoso';
+  };
+
+  const getVaccineted = (vaccinated) => {
+    if (vaccinated) return "vacinado";
+    return "nao_vacinado";
+  }
+
+  const getNeutered = (neutered) => {
+    if (neutered) return "castrado";
+    return "nao_castrado"; 
+  }
+
+  const filteredAnimals = animals.filter(animal => {
+    const matchesSearch = animal.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesIdade = idadeFilter === 'todos' || getIdadeGroup(animal.age_estimated) === idadeFilter;
+    const matchesVacinacao = vacinacaoFilter === 'todos' || getVaccineted(animal.vaccinated) === vacinacaoFilter;
+    const matchesStatus = statusFilter === 'todos' || animal.status === statusFilter;
+    const matchesGenero = generoFilter === 'todos' || animal.gender === generoFilter;
+    const matchesCastrado = castradoFilter === 'todos' || getNeutered(animal.neutered) === castradoFilter;
+  
+    return matchesSearch && matchesIdade && matchesVacinacao && matchesStatus && matchesGenero && matchesCastrado;
+  });
+
 
   if (loading) return (
     <div className="flex justify-center items-center min-h-screen">
@@ -93,18 +119,63 @@ function AnimalList() {
               className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          <div className="relative">
-            <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <div className="flex flex-wrap gap-4">
+            {/* Filtro de Idade */}
+            <select
+              className="border rounded-md p-2"
+              value={idadeFilter}
+              onChange={(e) => setIdadeFilter(e.target.value)}
+            >
+              <option value="todos">Todas as idades</option>
+              <option value="filhote">Filhote (0-1 ano)</option>
+              <option value="adulto">Adulto (1-7 anos)</option>
+              <option value="idoso">Idoso (7+ anos)</option>
+            </select>
+
+            {/* Filtro de gênero */}
+            <select
+              className="border rounded-md p-2"
+              value={generoFilter}
+              onChange={(e) => setGeneroFilter(e.target.value)}
+            >
+              <option value="todos">Todas os gêneros</option>
+              <option value="M">Macho</option>
+              <option value="F">Fêmea (1-7 anos)</option>
+            </select>
+
+            {/* Filtro de Status */}
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className="pl-10 pr-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
             >
-              <option value="all">Todos os status</option>
+              <option value="todos">Todos os status</option>
               <option value="available">Disponível</option>
               <option value="adopted">Adotado</option>
               <option value="under_treatment">Em tratamento</option>
               <option value="quarantine">Em quarentena</option>
+            </select>
+
+            {/* Filtro de Vacinação */}
+            <select
+              className="border rounded-md p-2"
+              value={vacinacaoFilter}
+              onChange={(e) => setVacinacaoFilter(e.target.value)}
+            >
+              <option value="todos">Todas as vacinações</option>
+              <option value="vacinado">Vacinação completa</option>
+              <option value="nao_vacinado">Vacinação pendente</option>
+            </select>
+
+            {/* Filtro de Castração */}
+            <select
+              className="border rounded-md p-2"
+              value={castradoFilter}
+              onChange={(e) => setCastradoFilter(e.target.value)}
+            >
+              <option value="todos">Todas as castrações</option>
+              <option value="castrado">Castrados</option>
+              <option value="nao_castrado">Castração pendente</option>
             </select>
           </div>
         </div>
@@ -135,12 +206,11 @@ function AnimalList() {
                         {animal.breed && ` • ${animal.breed}`}
                       </div>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      animal.status === 'available' ? 'bg-green-100 text-green-800' :
-                      animal.status === 'adopted' ? 'bg-blue-100 text-blue-800' :
-                      animal.status === 'under_treatment' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'
-                    }`}>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${animal.status === 'available' ? 'bg-green-100 text-green-800' :
+                        animal.status === 'adopted' ? 'bg-blue-100 text-blue-800' :
+                          animal.status === 'under_treatment' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                      }`}>
                       {getStatusLabel(animal.status)}
                     </span>
                   </div>
