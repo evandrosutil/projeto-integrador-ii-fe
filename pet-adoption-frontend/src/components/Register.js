@@ -10,7 +10,8 @@ function Register() {
     email: '',
     password: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    role: 'adopter'
   });
   const [error, setError] = useState('');
 
@@ -29,7 +30,8 @@ function Register() {
         email: formData.email,
         password: formData.password,
         first_name: formData.firstName,
-        last_name: formData.lastName
+        last_name: formData.lastName,
+        role: formData.role,
       });
       navigate('/login');
     } catch (err) {
@@ -105,6 +107,12 @@ function Register() {
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
             />
+          </div>
+          <div>
+            <select name="role" value={formData.role} onChange={handleChange}>
+              <option value="adopter">Adotante</option>
+              <option value="admin">Administrador (ONG)</option>
+            </select>
           </div>
           <button
             type="submit"

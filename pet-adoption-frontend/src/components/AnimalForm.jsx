@@ -40,7 +40,9 @@ function AnimalForm() {
         }
       });
 
-      setMessage('Animal cadastrado com sucesso!');
+      const message = response.data.name + " cadastrado com sucesso";
+      setMessage(message);
+
       setFormData({
         name: '',
         species: '',
@@ -54,7 +56,12 @@ function AnimalForm() {
         neutered: false
       });
     } catch (err) {
-      setError(err.response?.data?.message || 'Erro ao cadastrar animal');
+      console.log("err.status =", err.status);
+      if (err.status === 403) {
+        setError('Você não tem persmissão para cadastrar um animal');
+      } else {
+        setError(err.response?.data?.message || 'Erro ao cadastrar animal');
+      }
     }
   };
 
