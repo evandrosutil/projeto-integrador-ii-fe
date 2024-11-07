@@ -6,6 +6,7 @@ import Login from './components/Login';
 import AnimalList from './components/AnimalList';
 import AnimalForm from './components/AnimalForm';
 import PrivateRoute from './components/PrivateRoute';
+import AdoptantRegistration from './components/AdoptantRegistration';
 
 const Home = () => <div>Home Page</div>;
 
@@ -16,7 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register/admin" element={<Register />} />
+          <Route path="/register" element={<AdoptantRegistration />} />
           <Route 
           path="/animals" 
           element={

@@ -50,12 +50,10 @@ function AnimalList() {
   };
 
   const getGenderLabel = (gender) => {
-    console.log("gênero é ", gender);
     return gender === 'M' ? 'Macho' : gender === 'F' ? 'Fêmea' : gender;
   };
 
   const getIdadeGroup = (age_estimated) => {
-    console.log("idade é ", age_estimated);
     if (age_estimated <= 1) return 'filhote';
     if (age_estimated <= 7) return 'adulto';
     return 'idoso';
