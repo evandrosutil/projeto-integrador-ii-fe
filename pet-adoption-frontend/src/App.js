@@ -7,19 +7,10 @@ import AnimalList from './components/AnimalList/AnimalList';
 import AnimalForm from './components/AnimalForm';
 import PrivateRoute from './components/PrivateRoute';
 import AdoptantRegistration from './components/AdoptantRegistration/AdoptantRegistration';
-import Hero from './components/Hero';
-import Reviews from './components/Reviews';
+import Home from './components/Home';
 import Footer from './components/Footer';
 import './App.css';
 
-function Home() {
-  return (
-    <div className="Home">
-      <Hero />
-      <Reviews />
-    </div>
-  )
-}
 
 function App() {
   return (

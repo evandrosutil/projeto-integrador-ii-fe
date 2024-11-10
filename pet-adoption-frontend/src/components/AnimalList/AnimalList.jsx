@@ -93,7 +93,7 @@ function AdopterAnimalList() {
     const matchesStatus = (userData.role === 'admin' && (statusFilter === 'todos' || animal.status === statusFilter)) || animal.status === 'available';
     const matchesGenero = generoFilter === 'todos' || animal.gender === generoFilter;
     const matchesCastrado = castradoFilter === 'todos' || getNeutered(animal.neutered) === castradoFilter;
-    const matchesPorte = porteFilter == 'todos' || getPorte(animal.weight) === porteFilter;
+    const matchesPorte = porteFilter === 'todos' || getPorte(animal.weight) === porteFilter;
   
     return matchesSearch && matchesIdade && matchesVacinacao && matchesStatus && matchesGenero && matchesCastrado && matchesPorte;
   });
@@ -126,7 +126,7 @@ function AdopterAnimalList() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="pl-10 pr-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
+                className="select-input"
               >
                 <option value="todos">Todos os status</option>
                 <option value="available">Disponível</option>
@@ -207,8 +207,10 @@ function AdopterAnimalList() {
             <div className="animal-info">
               <h3 className="animal-name">{animal.name}</h3>
               <p className="animal-details">
-                {getGenderLabel(animal.gender)} • {getIdadeGroup(animal.age_estimated)} • {getPorte(animal.weight)}
+                {getGenderLabel(animal.gender)} • {getIdadeGroup(animal.age_estimated)} • {getPorte(animal.weight)}<br/><br/>
+                {userData?.role === 'admin' && (getStatusLabel(animal.status))}
               </p>
+              <br/>
             </div>
           </div>
         ))}

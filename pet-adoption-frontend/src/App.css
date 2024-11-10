@@ -41,7 +41,34 @@ body {
 
 .hero {
   text-align: center;
-  padding: 2rem;
+  padding: 20px;
+}
+
+.animal-carousel .animal-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+  padding: 10px;
+}
+
+.animal-image {
+  width: 100%;
+  height: auto;
+}
+
+.animal-info {
+  padding: 10px;
+}
+
+.animal-name {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.animal-details {
+  font-size: 0.9em;
+  color: #555;
 }
 
 .hero .images {

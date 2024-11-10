@@ -51,7 +51,7 @@ function Navbar() {
         {isAuthenticated() ? (
           <>
             {renderAuthenticatedMenu()}
-            <Link onClick={handleLogout} className="default-btn">
+            <Link to="/" onClick={handleLogout} className="default-btn">
               Sair
             </Link>
           </>
