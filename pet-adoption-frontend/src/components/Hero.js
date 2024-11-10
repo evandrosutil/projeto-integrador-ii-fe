@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import '../App.css';
 import 'slick-carousel/slick/slick.css';
@@ -53,10 +53,13 @@ const Hero = ({ animals }) => {
     <section className="hero">
       <h1>Aqui você pode encontrar uma nova amizade</h1>
       {animals.length > 0 ? (
-        <Slider {...settings} className="animal-carousel">
+        <Slider {...settings} className="hero-animal-carousel">
           {animals.map(animal => (
-            <div key={animal.id} className="hero-animal-card">
-              <img src={animal.image} alt={animal.name} className="animal-image" />
+            <div 
+              key={animal.id} 
+              className="hero-animal-card"
+              >
+              <img src={animal.image} alt={animal.name} className="hero-animal-image" />
               <div className="hero-animal-info">
                 <h3 className="hero-animal-name">{animal.name}</h3>
                 <p className="hero-animal-details">
@@ -70,6 +73,7 @@ const Hero = ({ animals }) => {
         <p>Carregando animais...</p>
       )}
       <button className="adopt-btn">Adote</button>
+
     </section>
   );
 };

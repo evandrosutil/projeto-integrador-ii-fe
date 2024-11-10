@@ -55,7 +55,7 @@ body {
 }
 
 .hero-animal-card {
-  width: 12px; 
+  width: 300px; 
   border: 1px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
@@ -69,11 +69,9 @@ body {
 }
 
 .hero-animal-image {
-  width: 100%;
-  justify-content: center;
-  height: 200px; /* Ajuste da altura da imagem */
-  object-fit: cover;
-  border-top-left-radius: 12px;
+  width: 10%;
+  height: 300px; 
+  border-top-left-radius: 1px;
   border-top-right-radius: 12px;
 }
 
@@ -92,7 +90,7 @@ body {
 .hero-details {
   font-size: 0.9em;
   color: #555;
-  line-height: 1.4; /* Melhora o espaçamento entre linhas */
+  line-height: 1.4;
 }
 
 .adopt-btn {
