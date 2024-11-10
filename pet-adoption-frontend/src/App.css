@@ -44,31 +44,70 @@ body {
   padding: 20px;
 }
 
-.animal-carousel .animal-card {
+.animal-carousel {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.animal-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.animal-card {
+  width: 12px; 
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  text-align: left;
-  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .animal-image {
   width: 100%;
-  height: auto;
+  height: 160px; /* Ajuste da altura da imagem */
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
 
 .animal-info {
   padding: 10px;
+  width: 100%; /* Garante que o conteúdo ocupe toda a largura do card */
 }
 
 .animal-name {
-  font-size: 1.2em;
-  margin: 0;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 10px 0 5px;
+  color: #333;
 }
 
 .animal-details {
   font-size: 0.9em;
   color: #555;
+  line-height: 1.4; /* Melhora o espaçamento entre linhas */
+}
+
+.adopt-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #f68d2e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.adopt-btn:hover {
+  background-color: #d67b26;
 }
 
 .hero .images {

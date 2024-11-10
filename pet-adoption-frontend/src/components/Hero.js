@@ -33,19 +33,21 @@ const getPorte = (weight) => {
 }
 
 const Hero = ({ animals }) => {
+  const slidesToShow = Math.min(animals.length, 3);
+
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: animals.length > slidesToShow,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: slidesToShow,
     slidesToScroll: 1,
+  centerMode: animals.length > slidesToShow,
+    centerPadding: "20px",
     responsive: [
       { breakpoint: 768, settings: { slidesToShow: 1 } },
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
     ],
   };
-  console.log("animais: ", animals.length);
-  console.log(animals);
 
   return (
     <section className="hero">
