@@ -12,29 +12,39 @@
   margin-bottom: 32px;
 }
 
+/* Busca */
+
 .search-container {
   display: flex;
   justify-content: center;
   margin-bottom: 32px;
 }
 
+.search-container .relative {
+  width: 100%;
+  position: relative;
+}
+
 .search-input {
   width: 100%;
-  max-width: 400px;
   padding: 8px 16px;
   padding-left: 40px;
   border: 1px solid #ddd;
   border-radius: 8px;
   outline: none;
+  font-size: 16px;
+  background-color: white;
 }
 
 .search-icon {
   position: absolute;
-  left: 16px;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #888;
+  color: #666;
 }
+
+/* Grid de resultado */
 
 .animal-grid {
   display: grid;
@@ -42,7 +52,25 @@
   gap: 16px;
 }
 
-@media (min-width: 640px) {
+/* Responsividade */
+@media (min-width: 768px) {
+  .filters-container {
+    padding: 0 24px;
+  }
+
+  .search-container {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .select-container {
+    justify-content: flex-start;
+  }
+
+  .select-input {
+    max-width: 250px;
+  }
+  
   .animal-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -84,24 +112,30 @@
   text-transform: capitalize;
 }
 
+/* Seção dos filtros */
 .select-container {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .select-input {
+  flex: 1;
+  min-width: 200px;
   padding: 8px 16px;
-  padding-left: 40px; /* Para alinhar o texto */
   border: 1px solid #ddd;
   border-radius: 8px;
   outline: none;
-  max-width: 250px;
-  appearance: none; /* Remove o estilo padrão do select em alguns navegadores */
+  appearance: none;
   background-color: white;
   color: #333;
   font-size: 16px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 32px;
 }
 
 .select-input:focus {

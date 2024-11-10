@@ -112,6 +112,7 @@ function AdopterAnimalList() {
       <h2 className="page-title">Adoções</h2>
 
       {/* Campo de Busca */}
+      {/* 
       <div className='filters-container'>
         <div className="search-container">
           <div className="relative">
@@ -124,79 +125,100 @@ function AdopterAnimalList() {
               className="search-input"
             />
           </div>
-          <br/>
 
           <div className='select-container'>
 
-            {userData?.role === 'admin' && (
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="select-input"
-              >
-                <option value="todos">Todos os status</option>
-                <option value="available">Disponível</option>
-                <option value="adopted">Adotado</option>
-                <option value="under_treatment">Em tratamento</option>
-                <option value="quarantine">Em quarentena</option>
-              </select>
-            )}
-
-            <select
-              className="select-input"
-              value={idadeFilter}
-              onChange={(e) => setIdadeFilter(e.target.value)}
-            >
-              <option value="todos">Todas as idades</option>
-              <option value="filhote">Filhote (0-1 ano)</option>
-              <option value="adulto">Adulto (1-7 anos)</option>
-              <option value="idoso">Idoso (7+ anos)</option>
-            </select>
-
-            <select
-              value={vacinacaoFilter}
-              onChange={(e) => setVacinacaoFilter(e.target.value)}
-              className="select-input"
-            >
-              <option value="todos">Todas as vacinações</option>
-              <option value="vacinado">Vacinação completa</option>
-              <option value="nao_vacinado">Vacinação pendente</option>
-            </select>
-
-            <select
-              className="select-input"
-              value={castradoFilter}
-              onChange={(e) => setCastradoFilter(e.target.value)}
-            >
-              <option value="todos">Todas as castrações</option>
-              <option value="castrado">Castrados</option>
-              <option value="nao_castrado">Castração pendente</option>
-            </select>
-
-            <select
-              value={generoFilter}
-              onChange={(e) => setGeneroFilter(e.target.value)}
-              className='select-input'
-            >
-              <option value="todos">Todas os gêneros</option>
-              <option value="M">Macho</option>
-              <option value="F">Fêmea</option>
-            </select>
-
-            <select
-              value={porteFilter}
-              onChange={(e) => setPorteFilter(e.target.value)}
-              className='select-input'
-            >
-              <option value="todos">Todos os portes</option>
-              <option value="pequeno">Pequeno</option>
-              <option value="médio">Médio</option>
-              <option value="grande">Grande</option>
-              <option value="gigante">Gigante</option>
-            </select>
           </div>
         </div>
+      </div> 
+      */}
+      <div className='filters-container'>
+        {/* Campo de Busca */}
+        <div className="search-container">
+          <div className="relative">
+            <Search className="search-icon" size={20} />
+            <input
+              type="text"
+              placeholder="Buscar por nome, espécie ou raça..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+        </div>
+
+        {/* Container dos Selects */}
+        <div className='select-container'>
+          {userData?.role === 'admin' && (
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="select-input"
+            >
+              <option value="todos">Todos os status</option>
+              <option value="available">Disponível</option>
+              <option value="adopted">Adotado</option>
+              <option value="under_treatment">Em tratamento</option>
+              <option value="quarantine">Em quarentena</option>
+            </select>
+          )}
+
+          <select
+            className="select-input"
+            value={idadeFilter}
+            onChange={(e) => setIdadeFilter(e.target.value)}
+          >
+            <option value="todos">Todas as idades</option>
+            <option value="filhote">Filhote (0-1 ano)</option>
+            <option value="adulto">Adulto (1-7 anos)</option>
+            <option value="idoso">Idoso (7+ anos)</option>
+          </select>
+
+          <select
+            value={vacinacaoFilter}
+            onChange={(e) => setVacinacaoFilter(e.target.value)}
+            className="select-input"
+          >
+            <option value="todos">Todas as vacinações</option>
+            <option value="vacinado">Vacinação completa</option>
+            <option value="nao_vacinado">Vacinação pendente</option>
+          </select>
+
+          <select
+            className="select-input"
+            value={castradoFilter}
+            onChange={(e) => setCastradoFilter(e.target.value)}
+          >
+            <option value="todos">Todas as castrações</option>
+            <option value="castrado">Castrados</option>
+            <option value="nao_castrado">Castração pendente</option>
+          </select>
+
+          <select
+            value={generoFilter}
+            onChange={(e) => setGeneroFilter(e.target.value)}
+            className='select-input'
+          >
+            <option value="todos">Todas os gêneros</option>
+            <option value="M">Macho</option>
+            <option value="F">Fêmea</option>
+          </select>
+
+          <select
+            value={porteFilter}
+            onChange={(e) => setPorteFilter(e.target.value)}
+            className='select-input'
+          >
+            <option value="todos">Todos os portes</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="médio">Médio</option>
+            <option value="grande">Grande</option>
+            <option value="gigante">Gigante</option>
+          </select>
+        </div>
       </div>
+
+
 
       {/* Grid de Cards */}
       <div className="animal-grid">
@@ -208,7 +230,7 @@ function AdopterAnimalList() {
           >
             {/*Foro*/}
             <img
-              src={animal.image}// || getRandomImage()}
+              src={animal.image || getRandomImage()}
               alt={animal.name}
               className="animal-image"
             />
