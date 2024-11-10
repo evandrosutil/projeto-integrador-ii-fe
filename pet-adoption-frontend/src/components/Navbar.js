@@ -1,48 +1,70 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { logout, isAuthenticated } from '../services/auth';
+import { logout, isAuthenticated, getUserData } from '../services/auth';
 
 function Navbar() {
   const navigate = useNavigate();
+  const userData = getUserData();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const renderAuthenticatedMenu = () => {
+    if (!userData) return null;
+
+    if (userData.role === 'admin') {
+      return (
+        <>
+          <Link to="/animals" className="default-btn">
+            <span>Meus Animais</span>
+          </Link>
+          <Link to="/animals/new" className="default-btn">
+            <span>Cadastrar Animal</span>
+          </Link>
+        </>
+      );
+    } else if (userData.role === 'adopter') {
+      return (
+        <>
+          <Link to="/animals" className="default-btn">
+            <span>Buscar Animais</span>
+          </Link>
+          <Link to="/profile" className="default-btn">
+            <span>Meu Perfil</span>
+          </Link>
+        </>
+      );
+    }
+  };
+
   return (
-    <nav className="bg-gray-800 text-white p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold">
-          Pet Adoption
-        </Link>
-        <div className="space-x-4">
-          {isAuthenticated() ? (
-            <>
-              <Link to="/animals" className="hover:text-gray-300">
-                Meus Animais
-              </Link>
-              <Link to="/animals/new" className="hover:text-gray-300">
-                Cadastrar Animal
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="hover:text-gray-300 cursor-pointer"
-              >
-                Sair
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:text-gray-300">
-                Login
-              </Link>
-              <Link to="/register" className="hover:text-gray-300">
-                Registrar
-              </Link>
-            </>
-          )}
-        </div>
+    <nav className="navbar">
+      {/* Logo */}
+      <Link to="/" className="logo">
+        Adote
+      </Link>
+
+      {/* Menu de navegação */}
+      <div className="flex items-center space-x-8">
+        {isAuthenticated() ? (
+          <>
+            {renderAuthenticatedMenu()}
+            <Link onClick={handleLogout} className="default-btn">
+              Sair
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="default-btn">
+              Login
+            </Link>
+            <Link to="/register" className="default-btn">
+              Registrar
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

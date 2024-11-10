@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import api from '../services/api';
+import api from '../../services/api';
+import './AnimalList.css';
 import { Search, PawPrint, Weight, Calendar, Info, Check, X, Heart } from 'lucide-react';
+import { getUserData } from '../../services/auth';
 
 function AnimalList() {
   const [animals, setAnimals] = useState([]);
@@ -12,6 +14,7 @@ function AnimalList() {
   const [vacinacaoFilter, setVacinacaoFilter] = useState('todos');
   const [generoFilter, setGeneroFilter] = useState('todos');
   const [castradoFilter, setCastradoFilter] = useState('todos')
+  const userData = getUserData();
 
   useEffect(() => {
     fetchAnimals();
@@ -68,12 +71,12 @@ function AnimalList() {
     if (neutered) return "castrado";
     return "nao_castrado"; 
   }
-
+  
   const filteredAnimals = animals.filter(animal => {
     const matchesSearch = animal.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesIdade = idadeFilter === 'todos' || getIdadeGroup(animal.age_estimated) === idadeFilter;
     const matchesVacinacao = vacinacaoFilter === 'todos' || getVaccineted(animal.vaccinated) === vacinacaoFilter;
-    const matchesStatus = statusFilter === 'todos' || animal.status === statusFilter;
+    const matchesStatus = (userData.role === 'admin' && (statusFilter === 'todos' || animal.status === statusFilter)) || animal.status === 'available';
     const matchesGenero = generoFilter === 'todos' || animal.gender === generoFilter;
     const matchesCastrado = castradoFilter === 'todos' || getNeutered(animal.neutered) === castradoFilter;
   
@@ -97,15 +100,13 @@ function AnimalList() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="container">
       <div className="container mx-auto px-4 py-8">
-        {/* Header Section */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Lista de Animais</h2>
           <p className="text-gray-600">Encontre seu novo companheiro</p>
         </div>
 
-        {/* Search and Filter Section */}
         <div className="mb-8 flex flex-col md:flex-row gap-4">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -118,60 +119,58 @@ function AnimalList() {
             />
           </div>
           <div className="flex flex-wrap gap-4">
-            {/* Filtro de Idade */}
+
             <select
               className="border rounded-md p-2"
               value={idadeFilter}
               onChange={(e) => setIdadeFilter(e.target.value)}
             >
-              <option value="todos">Todas as idades</option>
+              <option value="todos" disabled hidden>Todas as idades</option>
               <option value="filhote">Filhote (0-1 ano)</option>
               <option value="adulto">Adulto (1-7 anos)</option>
               <option value="idoso">Idoso (7+ anos)</option>
             </select>
 
-            {/* Filtro de gênero */}
             <select
               className="border rounded-md p-2"
               value={generoFilter}
               onChange={(e) => setGeneroFilter(e.target.value)}
             >
-              <option value="todos">Todas os gêneros</option>
+              <option value="todos" disabled hidden>Todas os gêneros</option>
               <option value="M">Macho</option>
               <option value="F">Fêmea (1-7 anos)</option>
             </select>
 
-            {/* Filtro de Status */}
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="pl-10 pr-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
-            >
-              <option value="todos">Todos os status</option>
-              <option value="available">Disponível</option>
-              <option value="adopted">Adotado</option>
-              <option value="under_treatment">Em tratamento</option>
-              <option value="quarantine">Em quarentena</option>
-            </select>
+            {userData?.role === 'admin' && (
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="pl-10 pr-8 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
+              >
+                <option value="todos" disabled hidden>Todos os status</option>
+                <option value="available">Disponível</option>
+                <option value="adopted">Adotado</option>
+                <option value="under_treatment">Em tratamento</option>
+                <option value="quarantine">Em quarentena</option>
+              </select>
+            )}
 
-            {/* Filtro de Vacinação */}
             <select
               className="border rounded-md p-2"
               value={vacinacaoFilter}
               onChange={(e) => setVacinacaoFilter(e.target.value)}
             >
-              <option value="todos">Todas as vacinações</option>
+              <option value="todos" disabled hidden>Todas as vacinações</option>
               <option value="vacinado">Vacinação completa</option>
               <option value="nao_vacinado">Vacinação pendente</option>
             </select>
 
-            {/* Filtro de Castração */}
             <select
               className="border rounded-md p-2"
               value={castradoFilter}
               onChange={(e) => setCastradoFilter(e.target.value)}
             >
-              <option value="todos">Todas as castrações</option>
+              <option value="todos" disabled hidden>Todas as castrações</option>
               <option value="castrado">Castrados</option>
               <option value="nao_castrado">Castração pendente</option>
             </select>
@@ -262,6 +261,12 @@ function AnimalList() {
                         Castrado
                       </span>
                     </div>
+                  </div>
+                  <div>
+                    <img 
+                      src={animal.image}
+                      alt={animal.name}
+                    />
                   </div>
                 </div>
               </div>
