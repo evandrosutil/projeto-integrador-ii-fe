@@ -55,11 +55,11 @@ const Hero = ({ animals }) => {
       {animals.length > 0 ? (
         <Slider {...settings} className="animal-carousel">
           {animals.map(animal => (
-            <div key={animal.id} className="animal-card">
+            <div key={animal.id} className="hero-animal-card">
               <img src={animal.image} alt={animal.name} className="animal-image" />
-              <div className="animal-info">
-                <h3 className="animal-name">{animal.name}</h3>
-                <p className="animal-details">
+              <div className="hero-animal-info">
+                <h3 className="hero-animal-name">{animal.name}</h3>
+                <p className="hero-animal-details">
                   {getGenderLabel(animal.gender)} • {getIdadeGroup(animal.age_estimated)} • {getPorte(animal.weight)}
                 </p>
               </div>

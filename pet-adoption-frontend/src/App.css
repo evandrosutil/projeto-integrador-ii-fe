@@ -44,7 +44,7 @@ body {
   padding: 20px;
 }
 
-.animal-carousel {
+.hero-animal-carousel {
   max-width: 900px;
   margin: 0 auto;
 }
@@ -54,7 +54,7 @@ body {
   justify-content: center;
 }
 
-.animal-card {
+.hero-animal-card {
   width: 12px; 
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -68,27 +68,28 @@ body {
   text-align: center;
 }
 
-.animal-image {
+.hero-animal-image {
   width: 100%;
-  height: 160px; /* Ajuste da altura da imagem */
+  justify-content: center;
+  height: 200px; /* Ajuste da altura da imagem */
   object-fit: cover;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-.animal-info {
+.hero-animal-info {
   padding: 10px;
   width: 100%; /* Garante que o conteúdo ocupe toda a largura do card */
 }
 
-.animal-name {
+.hero-animal-name {
   font-size: 1.1em;
   font-weight: bold;
   margin: 10px 0 5px;
   color: #333;
 }
 
-.animal-details {
+.hero-details {
   font-size: 0.9em;
   color: #555;
   line-height: 1.4; /* Melhora o espaçamento entre linhas */
