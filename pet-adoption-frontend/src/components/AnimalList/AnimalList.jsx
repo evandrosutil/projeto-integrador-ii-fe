@@ -91,7 +91,7 @@ function AdopterAnimalList() {
     const matchesSearch = animal.name.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesIdade = idadeFilter === 'todos' || getIdadeGroup(animal.age_estimated) === idadeFilter;
     const matchesVacinacao = vacinacaoFilter === 'todos' || getVaccineted(animal.vaccinated) === vacinacaoFilter;
-    const matchesStatus = (userData.role === 'admin' && (statusFilter === 'todos' || animal.status === statusFilter)) || animal.status === 'available';
+    const matchesStatus = (userData.role === 'admin' && (statusFilter === 'todos' || animal.status === statusFilter)) || (userData.role !== 'admin' && animal.status === 'available');
     const matchesGenero = generoFilter === 'todos' || animal.gender === generoFilter;
     const matchesCastrado = castradoFilter === 'todos' || getNeutered(animal.neutered) === castradoFilter;
     const matchesPorte = porteFilter === 'todos' || getPorte(animal.weight) === porteFilter;

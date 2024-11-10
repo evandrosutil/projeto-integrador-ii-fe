@@ -8,7 +8,7 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   const renderAuthenticatedMenu = () => {
@@ -51,7 +51,7 @@ function Navbar() {
         {isAuthenticated() ? (
           <>
             {renderAuthenticatedMenu()}
-            <Link to="/" onClick={handleLogout} className="default-btn">
+            <Link onClick={handleLogout} className="default-btn">
               Sair
             </Link>
           </>
